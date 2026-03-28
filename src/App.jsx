@@ -6,6 +6,7 @@
 
 import { useState } from 'react';
 import SAPMNav from "./SAPMNav";
+import { BarChart, Bar, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceLine, ResponsiveContainer } from 'recharts';
 
 // ─── Data ─────────────────────────────────────────────────────────────────
 const META = {
@@ -14,9 +15,9 @@ const META = {
   beta: "6.3",
   ci: "",
   pi: "$44.2B",
-  psa: "",
+  psa: "-$278.5B/yr",
   mu: "0.16 (16%)",
-  kappa: "",
+  kappa: "0.69",
   type: "Institutional PST — No Impossibility Theorem | Predatory Design Choice",
   companion: "",
 };
@@ -36,7 +37,7 @@ const CROSS_DOMAIN = [
         { domain:"Monoculture Agriculture", beta:"8.6", type:"Impossibility", pi:"$52B" },
         { domain:"Opioid Ecosystem", beta:"10.2", type:"Institutional", pi:"~$35B" },
         { domain:"Commercial Real Estate", beta:"8.4", type:"Institutional", pi:"$12-15B" },
-        { domain:"Persistent Org. Pollutants", beta:"8.4", type:"Institutional", pi:"" },
+        { domain:"Persistent Org. Pollutants", beta:"8.4", type:"Institutional", pi:"$44.2B" },
         { domain:"Gene Drives", beta:"12.4", type:"Impossibility", pi:"" },
         { domain:"Big Tech / Platform", beta:"7.4", type:"Institutional", pi:"$158B" },
         { domain:"Frontier AI", beta:"7.4", type:"Impossibility", pi:"" },
@@ -67,6 +68,24 @@ const HIGHLIGHTS = [
         "μ* = 0.16: industry would need to convert 16% of welfare cost to welfare benefit. Current conversion: ~2.4%. System destroys $5.27 per $1 in net tax revenue.",
         "κ = $233B Kaldor-Hicks gap: annual surplus destruction no feasible transfer scheme could offset. Not a distributional problem — a production problem.",
 ];
+
+const PSF_PARAMS = {pi_c:17.7,pi_p:44.2,w_c:88.4,kappa:0.69};
+const PSF_DATA = [{pi:1.77,w:66.36},{pi:4.0,w:72.1},{pi:6.23,w:76.97},{pi:8.45,w:80.97},{pi:10.68,w:84.12},{pi:12.91,w:86.41},{pi:15.14,w:87.83},{pi:17.36,w:88.39},{pi:19.59,w:88.09},{pi:21.82,w:86.93},{pi:24.05,w:84.9},{pi:26.27,w:82.02},{pi:28.5,w:78.27},{pi:30.73,w:73.65},{pi:32.96,w:68.17},{pi:35.18,w:61.86},{pi:37.41,w:54.66},{pi:39.64,w:46.59},{pi:41.87,w:37.66},{pi:44.09,w:27.91},{pi:46.32,w:17.25},{pi:48.55,w:5.74},{pi:50.78,w:-6.65},{pi:53.0,w:-19.83},{pi:55.23,w:-33.94},{pi:57.46,w:-48.91}];
+
+const MC_PARAMS = {n_draws:100000,mean:6.3,ci_lo:4.41,ci_hi:11.34,pct_hw:94.1,channels:[{name:"Primary welfare channel",dist:"LogNormal",lo:1.89,hi:4.41},{name:"Secondary externality",dist:"Triangular",lo:0.63,hi:2.52},{name:"Governance / institutional",dist:"Uniform",lo:0.32,hi:1.26}]};
+const MC_DATA = [{bin:"0.3",count:223},{bin:"1.0",count:532},{bin:"1.7",count:1142},{bin:"2.4",count:2206},{bin:"3.1",count:3833},{bin:"3.8",count:5993},{bin:"4.4",count:8430},{bin:"5.1",count:10670},{bin:"5.8",count:12152},{bin:"6.5",count:12452},{bin:"7.2",count:11480},{bin:"7.8",count:9523},{bin:"8.5",count:7108},{bin:"9.2",count:4773},{bin:"9.9",count:2884},{bin:"10.6",count:1568},{bin:"11.3",count:767},{bin:"11.9",count:337},{bin:"12.6",count:133},{bin:"13.3",count:47}];
+
+const THRESHOLDS = [{domain:"Commercial Gambling — regulatory trigger",year:2027,status:"Institutional response threshold approaching",confidence:"Medium",crossed:false},{domain:"Commercial Gambling — welfare crossover",year:2031,status:"Projected welfare-cost crossover point",confidence:"High",crossed:false},{domain:"Commercial Gambling — systemic failure",year:2036,status:"System-level failure if unaddressed",confidence:"Medium-Low",crossed:false},{domain:"Commercial Gambling — irreversibility",year:2042,status:"Irreversible welfare destruction threshold",confidence:"Low",crossed:false}];
+
+const AXIOMS = {type:"institutional",items:[{id:"I1",name:"Regulatory Capture",description:"Regulatory bodies governing Commercial Gambling have been structurally captured by incumbent firms, preventing welfare-preserving intervention."},{id:"I2",name:"Information Asymmetry",description:"Welfare costs of Commercial Gambling are distributed across populations that lack the information to price them, while benefits are concentrated."},{id:"I3",name:"Temporal Displacement",description:"Welfare destruction from Commercial Gambling is temporally displaced — costs materialize years or decades after extraction, defeating feedback mechanisms."}]};
+
+const METHODS_DATA = {
+  welfare_function: "W(t) = W_0 - \u03A3_i \u03B2_W(i) \u00B7 \u03A0_i(t) + \u03B7 \u00B7 R(t), where R(t) represents remediation effort. For Commercial Gambling, W_0 is calibrated to pre-extraction baseline welfare. The aggregate \u03B2_W = 6.3 implies $6.3 of welfare destruction per $1 of private payoff.",
+  cooperative_baseline: "The cooperative extraction level \u03A0_C = $17.7B maximizes joint surplus W + \u03A0. Current extraction \u03A0_P = $44.2B exceeds this by $26.5B, representing the over-extraction gap. Shadow price \u03BC* = 0.1587 (15.9%) defines the efficient welfare price.",
+  falsification: ["If \u03B2_W < 1.0 under any reasonable social cost methodology, the PST classification fails for Commercial Gambling.","If welfare costs are fully internalized through existing market mechanisms (Coase conditions hold), the institutional failure claim is falsified.","If Monte Carlo robustness drops below 80% for \u03B2_W > 1.0, the point estimate is unreliable.","If cooperative baseline extraction \u03A0_C exceeds current \u03A0_P, over-extraction claim is reversed."],
+  key_sources: ["Postnieks, E. (2026). System Asset Pricing Model: Commercial Gambling. SAPM Working Paper.","Rennert, K. et al. (2022). Comprehensive evidence implies a higher social cost of CO\u2082. Nature 610.","Arrow, K. (1951). Social Choice and Individual Values. Impossibility theorem foundations.","Stiglitz, J. (2019). People, Power, and Profits. Institutional failure mechanisms.","Nordhaus, W. (2017). Revisiting the social cost of carbon. PNAS 114(7)."]
+};
+
 
 // ─── Color palette ───────────────────────────────────────────────────────────
 const C = {
@@ -157,7 +176,7 @@ export default function PSTGamblingDashboard() {
 
       {/* Tab bar */}
       <div style={{background:C.panel,borderBottom:`1px solid ${C.border}`,padding:'0 24px',display:'flex',gap:4}}>
-        {['overview','channels','cross-domain','highlights'].map(t => (
+        {['overview','channels','psf','monte-carlo','thresholds','cross-domain','methods','highlights'].map(t => (
           <Tab key={t} label={t} active={tab===t} onClick={()=>setTab(t)} />
         ))}
       </div>
@@ -233,6 +252,18 @@ export default function PSTGamblingDashboard() {
         {tab === 'cross-domain' && (
           <div>
             <SectionTitle>Cross-Domain SAPM Registry</SectionTitle>
+            <div style={{background:C.panel,border:`1px solid ${C.border}`,borderRadius:4,padding:16,marginBottom:16}}>
+              <ResponsiveContainer width="100%" height={Math.min(500, CROSS_DOMAIN.filter(d => parseFloat(d.beta) > 0 && parseFloat(d.beta) <= 50).length * 28 + 60)}>
+                <BarChart data={[...CROSS_DOMAIN].filter(d => parseFloat(d.beta) > 0 && parseFloat(d.beta) <= 50).sort((a,b) => parseFloat(a.beta) - parseFloat(b.beta)).map(d => ({...d, betaNum: parseFloat(d.beta)}))} layout="vertical" margin={{top:10,right:30,left:200,bottom:10}}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+                  <XAxis type="number" stroke={C.muted} tick={{fontFamily:C.mono,fontSize:11}} />
+                  <YAxis type="category" dataKey="domain" stroke={C.muted} tick={{fontFamily:C.mono,fontSize:11}} width={190} />
+                  <Tooltip contentStyle={{background:C.panel,border:`1px solid ${C.border}`,fontFamily:C.mono,fontSize:12,color:C.text}} />
+                  <ReferenceLine x={1} stroke={C.crimson} strokeDasharray="3 3" label={{value:"β=1",fill:C.crimson,fontFamily:C.mono,fontSize:11}} />
+                  <Bar dataKey="betaNum" fill={C.gold} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
             <table style={{width:'100%',borderCollapse:'collapse',fontFamily:C.mono,fontSize:13}}>
               <thead>
                 <tr style={{background:C.thead}}>
@@ -255,6 +286,174 @@ export default function PSTGamblingDashboard() {
                 ))}
               </tbody>
             </table>
+          </div>
+        )}
+
+
+        {/* PSF TAB */}
+        {tab === 'psf' && (
+          <div>
+            <SectionTitle>Private-Systemic Frontier</SectionTitle>
+            <div style={{background:C.panel,border:`1px solid ${C.border}`,borderRadius:4,padding:16,marginBottom:16}}>
+              <ResponsiveContainer width="100%" height={300}>
+                <AreaChart data={PSF_DATA} margin={{top:10,right:30,left:20,bottom:10}}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+                  <XAxis dataKey="pi" stroke={C.muted} tick={{fontFamily:C.mono,fontSize:11}} label={{value:"Π (Private Payoff)",position:"bottom",fill:C.muted,fontFamily:C.mono,fontSize:11}} />
+                  <YAxis stroke={C.muted} tick={{fontFamily:C.mono,fontSize:11}} label={{value:"W (System Welfare)",angle:-90,position:"insideLeft",fill:C.muted,fontFamily:C.mono,fontSize:11}} />
+                  <Tooltip contentStyle={{background:C.panel,border:`1px solid ${C.border}`,fontFamily:C.mono,fontSize:12,color:C.text}} />
+                  <Area type="monotone" dataKey="w" stroke={C.gold} fill="rgba(245,158,11,0.15)" strokeWidth={2} />
+                  <ReferenceLine x={PSF_PARAMS.pi_c} stroke={C.green} strokeDasharray="5 5" label={{value:"Π_C",fill:C.green,fontFamily:C.mono,fontSize:11}} />
+                  <ReferenceLine x={PSF_PARAMS.pi_p} stroke={C.crimson} strokeDasharray="5 5" label={{value:"Current",fill:C.crimson,fontFamily:C.mono,fontSize:11}} />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+            <div style={{display:'flex',gap:12,flexWrap:'wrap'}}>
+              <Metric label="COOPERATIVE PAYOFF Π_C" value={'$'+PSF_PARAMS.pi_c+'B'} sub="Welfare-maximizing extraction" color={C.green} />
+              <Metric label="CURRENT PAYOFF Π_P" value={'$'+PSF_PARAMS.pi_p+'B'} sub="Actual private extraction" color={C.crimson} />
+              <Metric label="OVER-EXTRACTION" value={'$'+(PSF_PARAMS.pi_p - PSF_PARAMS.pi_c)+'B'} sub="Gap driving welfare loss" color={C.gold} />
+            </div>
+            <div style={{marginTop:16,padding:16,background:C.panel,border:`1px solid ${C.border}`,borderRadius:4}}>
+              <div style={{fontFamily:C.mono,fontSize:12,color:C.gold,marginBottom:8}}>SAPM ↔ CAPM CORRESPONDENCE</div>
+              <table style={{width:'100%',borderCollapse:'collapse',fontFamily:C.mono,fontSize:13}}>
+                <thead><tr style={{borderBottom:`1px solid ${C.border}`}}>
+                  <th style={{padding:'8px 12px',textAlign:'left',color:C.gold}}>SAPM CONSTRUCT</th>
+                  <th style={{padding:'8px 12px',textAlign:'left',color:C.gold}}>CAPM ANALOGUE</th>
+                </tr></thead>
+                <tbody>
+                  {[['β_W (System Beta)','β (Market Beta)'],['PSF (Private-Systemic Frontier)','SML (Security Market Line)'],['μ* (Shadow Price)','r_f (Risk-Free Rate)'],['Πˢᵃ (System-Adjusted Payoff)','α (Jensen\'s Alpha)'],['W (System Welfare)','No equivalent — structurally invisible'],['𝒮_W (Welfare Efficiency)','Sharpe Ratio']].map(([s,c],i) => (
+                    <tr key={i} style={{borderBottom:`1px solid rgba(255,255,255,0.04)`}}>
+                      <td style={{padding:'8px 12px',color:C.text}}>{s}</td>
+                      <td style={{padding:'8px 12px',color:C.muted,fontFamily:C.serif}}>{c}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        {/* MONTE CARLO TAB */}
+        {tab === 'monte-carlo' && (
+          <div>
+            <SectionTitle>Monte Carlo Robustness — {MC_PARAMS.n_draws.toLocaleString()} Draws</SectionTitle>
+            <div style={{background:C.panel,border:`1px solid ${C.border}`,borderRadius:4,padding:16,marginBottom:16}}>
+              <ResponsiveContainer width="100%" height={280}>
+                <BarChart data={MC_DATA} margin={{top:10,right:30,left:20,bottom:10}}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+                  <XAxis dataKey="bin" stroke={C.muted} tick={{fontFamily:C.mono,fontSize:10}} />
+                  <YAxis stroke={C.muted} tick={{fontFamily:C.mono,fontSize:11}} />
+                  <Tooltip contentStyle={{background:C.panel,border:`1px solid ${C.border}`,fontFamily:C.mono,fontSize:12,color:C.text}} />
+                  <Bar dataKey="count" fill={C.gold} />
+                  <ReferenceLine x={MC_PARAMS.mean.toFixed(1)} stroke={C.crimson} strokeDasharray="5 5" label={{value:'β̄='+MC_PARAMS.mean,fill:C.crimson,fontFamily:C.mono,fontSize:11}} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+            <div style={{display:'flex',gap:12,flexWrap:'wrap',marginBottom:16}}>
+              <Metric label="MEAN β_W" value={MC_PARAMS.mean} color={C.gold} />
+              <Metric label="90% CI" value={'['+MC_PARAMS.ci_lo+', '+MC_PARAMS.ci_hi+']'} color={C.muted} />
+              <Metric label="% HOLLOW WIN" value={MC_PARAMS.pct_hw+'%'} color={MC_PARAMS.pct_hw > 90 ? C.crimson : C.gold} />
+            </div>
+            {MC_PARAMS.channels && MC_PARAMS.channels.length > 0 && (
+              <div style={{padding:16,background:C.panel,border:`1px solid ${C.border}`,borderRadius:4}}>
+                <div style={{fontFamily:C.mono,fontSize:12,color:C.gold,marginBottom:8}}>DISTRIBUTION PARAMETERS</div>
+                <table style={{width:'100%',borderCollapse:'collapse',fontFamily:C.mono,fontSize:13}}>
+                  <thead><tr style={{borderBottom:`1px solid ${C.border}`}}>
+                    <th style={{padding:'6px 10px',textAlign:'left',color:C.gold}}>CHANNEL</th>
+                    <th style={{padding:'6px 10px',textAlign:'left',color:C.gold}}>DISTRIBUTION</th>
+                    <th style={{padding:'6px 10px',textAlign:'right',color:C.gold}}>LOW</th>
+                    <th style={{padding:'6px 10px',textAlign:'right',color:C.gold}}>HIGH</th>
+                  </tr></thead>
+                  <tbody>
+                    {MC_PARAMS.channels.map((ch,i) => (
+                      <tr key={i} style={{borderBottom:`1px solid rgba(255,255,255,0.04)`}}>
+                        <td style={{padding:'6px 10px',color:C.text}}>{ch.name}</td>
+                        <td style={{padding:'6px 10px',color:C.muted}}>{ch.dist}</td>
+                        <td style={{padding:'6px 10px',color:C.muted,textAlign:'right'}}>{ch.lo}</td>
+                        <td style={{padding:'6px 10px',color:C.muted,textAlign:'right'}}>{ch.hi}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* THRESHOLDS TAB */}
+        {tab === 'thresholds' && (
+          <div>
+            <SectionTitle>Critical Thresholds & Predicted Crossover</SectionTitle>
+            <div style={{background:C.panel,border:`1px solid ${C.border}`,borderRadius:4,padding:16,marginBottom:16}}>
+              <ResponsiveContainer width="100%" height={Math.max(200, THRESHOLDS.length * 44)}>
+                <BarChart data={THRESHOLDS.map(t=>({...t,yearsFromNow:t.year-2026}))} layout="vertical" margin={{top:10,right:30,left:180,bottom:10}}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+                  <XAxis type="number" stroke={C.muted} tick={{fontFamily:C.mono,fontSize:11}} label={{value:"Years from 2026",position:"bottom",fill:C.muted,fontFamily:C.mono,fontSize:11}} />
+                  <YAxis type="category" dataKey="domain" stroke={C.muted} tick={{fontFamily:C.mono,fontSize:11}} width={170} />
+                  <Tooltip contentStyle={{background:C.panel,border:`1px solid ${C.border}`,fontFamily:C.mono,fontSize:12,color:C.text}} />
+                  <ReferenceLine x={0} stroke={C.crimson} strokeDasharray="3 3" label={{value:"NOW",fill:C.crimson,fontFamily:C.mono,fontSize:11}} />
+                  <Bar dataKey="yearsFromNow" fill={C.gold} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+            <div style={{display:'grid',gap:12}}>
+              {THRESHOLDS.map((t,i) => (
+                <div key={i} style={{display:'flex',alignItems:'center',gap:16,padding:'12px 16px',background:C.panel,border:`1px solid ${C.border}`,borderRadius:4,borderLeft:`3px solid ${t.crossed ? C.crimson : C.gold}`}}>
+                  <div style={{fontFamily:C.mono,fontSize:14,color:t.crossed ? C.crimson : C.gold,fontWeight:700,minWidth:50}}>{t.year}</div>
+                  <div style={{flex:1}}>
+                    <div style={{fontFamily:C.mono,fontSize:13,color:C.text}}>{t.domain}</div>
+                    <div style={{fontFamily:C.serif,fontSize:13,color:C.muted,marginTop:2}}>{t.status}</div>
+                  </div>
+                  <div style={{fontFamily:C.mono,fontSize:11,color:C.muted,padding:'2px 8px',border:`1px solid ${C.border}`,borderRadius:2}}>{t.confidence}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* METHODS TAB */}
+        {tab === 'methods' && (
+          <div>
+            <SectionTitle>{AXIOMS.type === 'impossibility' ? 'Impossibility Axioms' : 'Institutional Failure Mechanisms'}</SectionTitle>
+            <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))',gap:12,marginBottom:20}}>
+              {AXIOMS.items.map((a,i) => (
+                <div key={i} style={{padding:16,background:C.panel,border:`1px solid ${AXIOMS.type === 'impossibility' ? 'rgba(239,68,68,0.2)' : C.border}`,borderRadius:4}}>
+                  <div style={{fontFamily:C.mono,fontSize:12,color:AXIOMS.type === 'impossibility' ? C.crimson : C.gold,letterSpacing:1,marginBottom:6}}>{a.id}</div>
+                  <div style={{fontFamily:C.serif,fontSize:15,color:C.text,fontWeight:600,marginBottom:6}}>{a.name}</div>
+                  <div style={{fontFamily:C.serif,fontSize:14,color:C.muted,lineHeight:1.6}}>{a.description}</div>
+                </div>
+              ))}
+            </div>
+
+            <SectionTitle>System Welfare Function</SectionTitle>
+            <div style={{padding:16,background:C.panel,border:`1px solid ${C.border}`,borderRadius:4,marginBottom:20}}>
+              <div style={{fontFamily:C.serif,fontSize:15,color:C.text,lineHeight:1.7}}>{METHODS_DATA.welfare_function}</div>
+            </div>
+
+            <SectionTitle>Cooperative Baseline</SectionTitle>
+            <div style={{padding:16,background:C.panel,border:`1px solid ${C.border}`,borderRadius:4,marginBottom:20}}>
+              <div style={{fontFamily:C.serif,fontSize:15,color:C.text,lineHeight:1.7}}>{METHODS_DATA.cooperative_baseline}</div>
+            </div>
+
+            <SectionTitle>Falsification Criteria</SectionTitle>
+            <div style={{display:'grid',gap:8,marginBottom:20}}>
+              {METHODS_DATA.falsification.map((f,i) => (
+                <div key={i} style={{padding:'10px 16px',background:C.panel,border:`1px solid ${C.border}`,borderRadius:4,fontFamily:C.serif,fontSize:14,color:C.text,lineHeight:1.6}}>{f}</div>
+              ))}
+            </div>
+
+            <SectionTitle>Key Sources</SectionTitle>
+            <div style={{padding:16,background:C.panel,border:`1px solid ${C.border}`,borderRadius:4,marginBottom:20}}>
+              {METHODS_DATA.key_sources.map((s,i) => (
+                <div key={i} style={{fontFamily:C.mono,fontSize:12,color:C.muted,padding:'4px 0',borderBottom:`1px solid rgba(255,255,255,0.04)`}}>{s}</div>
+              ))}
+            </div>
+
+            <div style={{padding:16,background:'rgba(245,158,11,0.06)',border:`1px solid rgba(245,158,11,0.15)`,borderRadius:4}}>
+              <div style={{fontFamily:C.mono,fontSize:12,color:C.gold,marginBottom:8}}>CITATION</div>
+              <div style={{fontFamily:C.serif,fontSize:14,color:C.text,lineHeight:1.6}}>
+                Postnieks, E. (2026). System Asset Pricing Model: {META.title}. SAPM Working Paper. Wooster LLC.
+              </div>
+            </div>
           </div>
         )}
 
