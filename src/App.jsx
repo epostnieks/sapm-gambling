@@ -12,8 +12,8 @@ import { BarChart, Bar, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, R
 const META = {
   title: "Commercial Gambling",
   subtitle: "System Welfare Cost of Predatory Extraction",
-  beta: "6.3",
-  ci: "",
+  beta: "7.19",
+  ci: "5.64–9.09",
   pi: "$44.2B",
   psa: "-$278.5B/yr",
   mu: "0.16 (16%)",
@@ -69,23 +69,24 @@ const HIGHLIGHTS = [
         "κ = $233B Kaldor-Hicks gap: annual surplus destruction no feasible transfer scheme could offset. Not a distributional problem — a production problem.",
 ];
 
-const PSF_PARAMS = {pi_c:7.0,pi_p:44.2,w_c:132.6,kappa:0.81};
-const PSF_DATA = [{pi:0.7,w:129.52},{pi:2.97,w:131.34},{pi:5.24,w:132.36},{pi:7.51,w:132.58},{pi:9.78,w:132.0},{pi:12.05,w:130.62},{pi:14.32,w:128.44},{pi:16.59,w:125.46},{pi:18.86,w:121.68},{pi:21.13,w:117.1},{pi:23.4,w:111.72},{pi:25.67,w:105.55},{pi:27.94,w:98.57},{pi:30.22,w:90.75},{pi:32.49,w:82.17},{pi:34.76,w:72.79},{pi:37.03,w:62.61},{pi:39.3,w:51.63},{pi:41.57,w:39.84},{pi:43.84,w:27.26},{pi:46.11,w:13.88},{pi:48.38,w:-0.3},{pi:50.65,w:-15.28},{pi:52.92,w:-31.06},{pi:55.19,w:-47.64},{pi:57.46,w:-65.02}];
+const PSF_PARAMS = {pi_c:9.5,pi_p:44.2,w_c:278.5,kappa:0.91};
+const PSF_DATA = [{pi:0.95,w:263.11},{pi:2.83,w:269.14},{pi:4.72,w:273.69},{pi:6.6,w:276.73},{pi:8.48,w:278.28},{pi:10.37,w:278.34},{pi:12.25,w:276.91},{pi:14.14,w:273.97},{pi:16.02,w:269.55},{pi:17.9,w:263.65},{pi:19.79,w:256.21},{pi:21.67,w:247.33},{pi:23.55,w:236.95},{pi:25.44,w:225.02},{pi:27.32,w:211.66},{pi:29.21,w:196.73},{pi:31.09,w:180.39},{pi:32.97,w:162.56},{pi:34.86,w:143.14},{pi:36.74,w:122.32},{pi:38.62,w:100.02},{pi:40.51,w:76.1},{pi:42.39,w:50.81},{pi:44.27,w:24.04},{pi:46.16,w:-4.37},{pi:48.04,w:-34.13},{pi:49.93,w:-65.54},{pi:51.81,w:-98.29},{pi:53.69,w:-132.51},{pi:55.58,w:-168.42},{pi:57.46,w:-205.63}];
 
-const MC_PARAMS = {n_draws:10000,mean:6.3,ci_lo:4.2,ci_hi:9.4,pct_hw:96.5,channels:[{name:"Problem gambling social costs",dist:"log-normal",lo:2.4,hi:4.2},{name:"Regressive wealth transfer",dist:"triangular",lo:1.0,hi:2.2},{name:"Sports betting youth normalization",dist:"log-normal",lo:0.4,hi:1.2},{name:"Addiction comorbidity costs",dist:"uniform",lo:0.3,hi:0.9}]};
-const MC_DATA = [{bin:"1.1",count:4},{bin:"1.6",count:14},{bin:"2.2",count:39},{bin:"2.7",count:93},{bin:"3.3",count:195},{bin:"3.8",count:361},{bin:"4.4",count:590},{bin:"4.9",count:852},{bin:"5.5",count:1089},{bin:"6.0",count:1231},{bin:"6.6",count:1231},{bin:"7.1",count:1089},{bin:"7.7",count:852},{bin:"8.2",count:590},{bin:"8.8",count:361},{bin:"9.3",count:195},{bin:"9.9",count:93},{bin:"10.4",count:39},{bin:"11.0",count:14},{bin:"11.5",count:4}];
+const MC_HIST = [{bin:"5.14",lo:5.1392,hi:5.2361,count:34},{bin:"5.24",lo:5.2361,hi:5.3330,count:51},{bin:"5.33",lo:5.3330,hi:5.4299,count:77},{bin:"5.43",lo:5.4299,hi:5.5268,count:124},{bin:"5.53",lo:5.5268,hi:5.6237,count:133},{bin:"5.62",lo:5.6237,hi:5.7206,count:151},{bin:"5.72",lo:5.7206,hi:5.8175,count:225},{bin:"5.82",lo:5.8175,hi:5.9144,count:256},{bin:"5.91",lo:5.9144,hi:6.0113,count:269},{bin:"6.01",lo:6.0113,hi:6.1082,count:295},{bin:"6.11",lo:6.1082,hi:6.2051,count:291},{bin:"6.21",lo:6.2051,hi:6.3020,count:330},{bin:"6.30",lo:6.3020,hi:6.3989,count:366},{bin:"6.40",lo:6.3989,hi:6.4958,count:338},{bin:"6.50",lo:6.4958,hi:6.5927,count:325},{bin:"6.59",lo:6.5927,hi:6.6896,count:340},{bin:"6.69",lo:6.6896,hi:6.7865,count:384},{bin:"6.79",lo:6.7865,hi:6.8834,count:343},{bin:"6.88",lo:6.8834,hi:6.9803,count:319},{bin:"6.98",lo:6.9803,hi:7.0772,count:306},{bin:"7.08",lo:7.0772,hi:7.1741,count:283},{bin:"7.17",lo:7.1741,hi:7.2710,count:321},{bin:"7.27",lo:7.2710,hi:7.3679,count:289},{bin:"7.37",lo:7.3679,hi:7.4648,count:279},{bin:"7.46",lo:7.4648,hi:7.5617,count:279},{bin:"7.56",lo:7.5617,hi:7.6586,count:244},{bin:"7.66",lo:7.6586,hi:7.7555,count:266},{bin:"7.76",lo:7.7555,hi:7.8524,count:281},{bin:"7.85",lo:7.8524,hi:7.9493,count:267},{bin:"7.95",lo:7.9493,hi:8.0462,count:215},{bin:"8.05",lo:8.0462,hi:8.1431,count:227},{bin:"8.14",lo:8.1431,hi:8.2400,count:197},{bin:"8.24",lo:8.2400,hi:8.3369,count:198},{bin:"8.34",lo:8.3369,hi:8.4338,count:170},{bin:"8.43",lo:8.4338,hi:8.5306,count:197},{bin:"8.53",lo:8.5306,hi:8.6275,count:151},{bin:"8.63",lo:8.6275,hi:8.7244,count:164},{bin:"8.72",lo:8.7244,hi:8.8213,count:137},{bin:"8.82",lo:8.8213,hi:8.9182,count:122},{bin:"8.92",lo:8.9182,hi:9.0151,count:113},{bin:"9.02",lo:9.0151,hi:9.1120,count:119},{bin:"9.11",lo:9.1120,hi:9.2089,count:108},{bin:"9.21",lo:9.2089,hi:9.3058,count:72},{bin:"9.31",lo:9.3058,hi:9.4027,count:60},{bin:"9.40",lo:9.4027,hi:9.4996,count:55},{bin:"9.50",lo:9.4996,hi:9.5965,count:36},{bin:"9.60",lo:9.5965,hi:9.6934,count:34},{bin:"9.69",lo:9.6934,hi:9.7903,count:25},{bin:"9.79",lo:9.7903,hi:9.8872,count:22},{bin:"9.89",lo:9.8872,hi:9.9841,count:12}];
+const MC_STATS = {mean:7.1944,median:7.0728,ci_lo:5.6439,ci_hi:9.0875,pct_hw:100.0,pct_above_3:100.0,pct_above_5:99.7,min:4.5592,max:11.0113,n_draws:10000,seed:42};
+const MC_CHANNELS = [{name:"Problem gambling health",mean:121.04,p5:95.97,p50:120.20,p95:147.24,share:0.3801},{name:"Bankruptcy & financial",mean:64.04,p5:47.44,p50:63.48,p95:81.74,share:0.2011},{name:"Family & domestic harm",mean:65.88,p5:50.37,p50:65.11,p95:84.31,share:0.2069},{name:"Crime & fraud",mean:31.97,p5:22.28,p50:31.53,p95:42.62,share:0.1004},{name:"Youth initiation",mean:24.01,p5:15.70,p50:23.56,p95:33.39,share:0.0754},{name:"Governance capture",mean:11.49,p5:5.64,p50:11.50,p95:17.31,share:0.0361}];
+const MC_WELFARE = {mean:318.42,ci_lo:281.66,ci_hi:356.76};
 
-const THRESHOLDS = [{domain:"PASPA repeal and state legalization wave",year:2018,status:"Murphy v. NCAA (2018) struck down PASPA; 38 states + DC legalized sports betting by 2024; handle grew from $0 to $120B/yr in 6 years",confidence:"High",crossed:true},{domain:"Online gambling revenue exceeds casino",year:2026,status:"US igaming revenue $6.8B in 2023 (AGA); mobile sports betting 90% of handle; structural shift from destination to always-available gambling",confidence:"Medium",crossed:false},{domain:"Problem gambling prevalence doubling",year:2028,status:"NCPG estimates 2.6M US adults meet criteria for severe problem gambling (2023); online availability associated with 30–50% increase in problem gambling rates (Gainsbury 2015)",confidence:"Medium",crossed:false},{domain:"Youth gambling crisis threshold",year:2027,status:"NCAA reports 58% of 18–22 year old males have bet on sports (2023); 35% started before legal age",confidence:"Low",crossed:false}];
+const THRESHOLDS = [{domain:"Online gambling penetration >30% of adults",year:2025,confidence:"High",status:"42 U.S. states with legal sports betting; online penetration ~35%",crossed:true},{domain:"Problem gambling prevalence >3% (U.S.)",year:2024,confidence:"High",status:"NCPG estimates 2-3% clinical, 4-6% subclinical; rising with mobile betting",crossed:true},{domain:"Federal online gambling regulation",year:2028,confidence:"Low",status:"Wire Act interpretation in flux; no federal framework",crossed:false},{domain:"Sports betting advertising saturation threshold",year:2025,confidence:"High",status:"NFL broadcast gambling ad saturation already drawing FTC attention",crossed:true}];
 
-const AXIOMS = {type:"institutional",items:[{id:"I1",name:"State Revenue Dependence",description:"State governments collected $13.5B in gambling tax revenue in 2023 (AGA); states simultaneously regulate and profit from gambling, creating structural conflict of interest identical to pre-MSA tobacco dynamics."},{id:"I2",name:"Advertising Saturation and Normalization",description:"Gambling industry spent $1.8B on US advertising in 2023 (Pathmatics); DraftKings and FanDuel alone spent $725M. First-deposit bonuses and ‘risk-free bet’ promotions target acquisition while obscuring negative expected value."},{id:"I3",name:"Behavioral Design Exploitation",description:"Modern gambling products use variable-ratio reinforcement schedules, near-miss algorithms, and dopaminergic trigger engineering; Schüll (2012) ‘Addiction by Design’ documents how slot machine design systematically exploits cognitive biases."}]};
+const AXIOMS = {type:"institutional",items:[{id:"I1",name:"Addiction-by-design extraction",description:"Variable ratio reinforcement schedules, near-miss engineering, and loss-chasing UX design exploit neurobiological vulnerabilities to generate revenue concentrated among the ~15% of users with gambling disorder."},{id:"I2",name:"Regulatory capture through tax revenue dependency",description:"States that legalize gambling become financially dependent on gambling tax revenue, creating structural incentives to avoid regulation that would reduce volume."},{id:"I3",name:"Harm externalization",description:"Gambling costs (bankruptcy, family dissolution, mental health, crime) fall on healthcare, social services, and courts while profits accrue to operators — a textbook externality with no Pigouvian correction in any U.S. jurisdiction."}]};
 
 const METHODS_DATA = {
-  welfare_function: "W = −[Problem_gambling_costs + Bankruptcy + Divorce + Suicide + Crime + Regressive_transfer]. Australian Productivity Commission (2010) methodology: social cost per problem gambler = $21,000–43,000/yr; US estimates: $7–12B/yr in direct costs + $60–100B in broader welfare losses.",
-  cooperative_baseline: "Gambling sector with strict loss limits ($500/month per person), mandatory pre-commitment, advertising restrictions, and self-exclusion enforcement; cooperative Π_C = $7.0B reflects recreational gambling at welfare-neutral extraction.",
-  falsification: ["If mandatory pre-commitment systems (e.g., Norway model) reduce problem gambling by >50% without reducing total revenue, welfare multiplication may be overestimated.","If problem gambling rates remain stable despite legalization expansion, dose-response assumption is wrong.","If Monte Carlo robustness for β_W > 1 falls below 80%, point estimate is unreliable.","If gambling tax revenue demonstrably funds public goods at rates exceeding social costs, net welfare could be positive."],
-  key_sources: ["Schüll, N.D. (2012). Addiction by Design: Machine Gambling in Las Vegas. Princeton University Press.","Australian Productivity Commission (2010). Gambling: Productivity Commission Inquiry Report No. 50.","American Gaming Association (2024). State of the States 2024: The AGA Survey of the Commercial Casino Industry.","Gainsbury, S.M. (2015). Online gambling addiction: the relationship between internet gambling and disordered gambling. Current Addiction Reports 2.","NCAA (2023). NCAA Student-Athlete Survey on Sports Wagering."]
+  welfare_function: "W measured as problem gambling health costs (VSL-weighted suicide risk, mental health treatment), financial destruction (bankruptcy rates above baseline), family harm (divorce, child welfare costs), and criminal justice costs.",
+  cooperative_baseline: "Gambling limited to low-stakes recreational venues with no mobile access, no algorithmic personalization, and mandatory harm-minimization tools, generating $9.5B in legitimate entertainment value.",
+  falsification: ["F1: Demonstrate that expanded gambling access in a U.S. state does not increase problem gambling prevalence in a well-powered difference-in-differences study.","F2: Show that gambling revenue multiplier effects on state economies exceed the fiscal cost of gambling-related social services, healthcare, and criminal justice.","F3: Demonstrate that responsible gambling tools (deposit limits, self-exclusion) reduce problem gambling harm at scale without reducing total gambling revenue."],
+  key_sources: ["National Council on Problem Gambling, Annual Report (2024)","American Gaming Association, State of the States (2024)","Calado & Griffiths, Problem gambling worldwide (2016) Journal of Behavioral Addictions","SAMHSA, National Survey on Drug Use and Health (2023)"]
 };
-
 
 // ─── Color palette ───────────────────────────────────────────────────────────
 const C = {
@@ -331,51 +332,58 @@ export default function PSTGamblingDashboard() {
             </div>
           </div>
         )}
-
         {/* MONTE CARLO TAB */}
         {tab === 'monte-carlo' && (
           <div>
-            <SectionTitle>Monte Carlo Robustness — {MC_PARAMS.n_draws.toLocaleString()} Draws</SectionTitle>
+            <SectionTitle>Monte Carlo Simulation — {MC_STATS.n_draws.toLocaleString()} Draws (seed={MC_STATS.seed})</SectionTitle>
             <div style={{background:C.panel,border:`1px solid ${C.border}`,borderRadius:4,padding:16,marginBottom:16}}>
-              <ResponsiveContainer width="100%" height={280}>
-                <BarChart data={MC_DATA} margin={{top:10,right:30,left:20,bottom:10}}>
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={MC_HIST} margin={{top:10,right:30,left:20,bottom:30}}>
                   <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
-                  <XAxis dataKey="bin" stroke={C.muted} tick={{fontFamily:C.mono,fontSize:10}} />
+                  <XAxis dataKey="bin" stroke={C.muted} tick={{fontFamily:C.mono,fontSize:9}} angle={-45} textAnchor="end" interval={4} />
                   <YAxis stroke={C.muted} tick={{fontFamily:C.mono,fontSize:11}} />
-                  <Tooltip contentStyle={{background:C.panel,border:`1px solid ${C.border}`,fontFamily:C.mono,fontSize:12,color:C.text}} />
+                  <Tooltip contentStyle={{background:C.panel,border:`1px solid ${C.border}`,fontFamily:C.mono,fontSize:12,color:C.text}} formatter={(v)=>[v,'Draws']} />
                   <Bar dataKey="count" fill={C.gold} />
-                  <ReferenceLine x={MC_PARAMS.mean.toFixed(1)} stroke={C.crimson} strokeDasharray="5 5" label={{value:'β̄='+MC_PARAMS.mean,fill:C.crimson,fontFamily:C.mono,fontSize:11}} />
+                  <ReferenceLine x={MC_STATS.mean.toFixed(2)} stroke={C.crimson} strokeWidth={2} strokeDasharray="5 5" label={{value:'μ='+MC_STATS.mean.toFixed(2),fill:C.crimson,fontFamily:C.mono,fontSize:11,position:'top'}} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
             <div style={{display:'flex',gap:12,flexWrap:'wrap',marginBottom:16}}>
-              <Metric label="MEAN β_W" value={MC_PARAMS.mean} color={C.gold} />
-              <Metric label="90% CI" value={'['+MC_PARAMS.ci_lo+', '+MC_PARAMS.ci_hi+']'} color={C.muted} />
-              <Metric label="% HOLLOW WIN" value={MC_PARAMS.pct_hw+'%'} color={MC_PARAMS.pct_hw > 90 ? C.crimson : C.gold} />
+              <Metric label="MEAN β_W" value={MC_STATS.mean.toFixed(2)} sub={'Median: '+MC_STATS.median.toFixed(2)} color={C.gold} />
+              <Metric label="90% CI" value={'['+MC_STATS.ci_lo.toFixed(2)+', '+MC_STATS.ci_hi.toFixed(2)+']'} sub={'Range: '+MC_STATS.min.toFixed(2)+'–'+MC_STATS.max.toFixed(2)} color={C.muted} />
+              <Metric label="% HOLLOW WIN" value={MC_STATS.pct_hw.toFixed(1)+'%'} sub={'β_W > 1 in all draws'} color={MC_STATS.pct_hw > 95 ? C.crimson : C.gold} />
+              <Metric label="% β_W > 3" value={MC_STATS.pct_above_3.toFixed(1)+'%'} color={MC_STATS.pct_above_3 > 90 ? C.crimson : C.gold} />
+              <Metric label="% β_W > 5" value={MC_STATS.pct_above_5.toFixed(1)+'%'} color={MC_STATS.pct_above_5 > 50 ? '#D97706' : C.gold} />
             </div>
-            {MC_PARAMS.channels && MC_PARAMS.channels.length > 0 && (
-              <div style={{padding:16,background:C.panel,border:`1px solid ${C.border}`,borderRadius:4}}>
-                <div style={{fontFamily:C.mono,fontSize:12,color:C.gold,marginBottom:8}}>DISTRIBUTION PARAMETERS</div>
-                <table style={{width:'100%',borderCollapse:'collapse',fontFamily:C.mono,fontSize:13}}>
-                  <thead><tr style={{borderBottom:`1px solid ${C.border}`}}>
-                    <th style={{padding:'6px 10px',textAlign:'left',color:C.gold}}>CHANNEL</th>
-                    <th style={{padding:'6px 10px',textAlign:'left',color:C.gold}}>DISTRIBUTION</th>
-                    <th style={{padding:'6px 10px',textAlign:'right',color:C.gold}}>LOW</th>
-                    <th style={{padding:'6px 10px',textAlign:'right',color:C.gold}}>HIGH</th>
-                  </tr></thead>
-                  <tbody>
-                    {MC_PARAMS.channels.map((ch,i) => (
-                      <tr key={i} style={{borderBottom:`1px solid rgba(255,255,255,0.04)`}}>
-                        <td style={{padding:'6px 10px',color:C.text}}>{ch.name}</td>
-                        <td style={{padding:'6px 10px',color:C.muted}}>{ch.dist}</td>
-                        <td style={{padding:'6px 10px',color:C.muted,textAlign:'right'}}>{ch.lo}</td>
-                        <td style={{padding:'6px 10px',color:C.muted,textAlign:'right'}}>{ch.hi}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
+            <SectionTitle>Channel Welfare Contributions</SectionTitle>
+            <table style={{width:'100%',borderCollapse:'collapse',fontFamily:C.mono,fontSize:13}}>
+              <thead><tr style={{borderBottom:`1px solid ${C.border}`}}>
+                <th style={{padding:'8px 12px',textAlign:'left',color:C.gold}}>CHANNEL</th>
+                <th style={{padding:'8px 12px',textAlign:'right',color:C.gold}}>MEAN $B</th>
+                <th style={{padding:'8px 12px',textAlign:'right',color:C.gold}}>P5</th>
+                <th style={{padding:'8px 12px',textAlign:'right',color:C.gold}}>P50</th>
+                <th style={{padding:'8px 12px',textAlign:'right',color:C.gold}}>P95</th>
+                <th style={{padding:'8px 12px',textAlign:'right',color:C.gold}}>SHARE</th>
+              </tr></thead>
+              <tbody>
+                {MC_CHANNELS.map((ch,i) => (
+                  <tr key={i} style={{borderBottom:`1px solid rgba(255,255,255,0.04)`,background:i%2===0?C.panel:C.bg}}>
+                    <td style={{padding:'8px 12px',color:C.text,fontFamily:C.serif,fontSize:14}}>{ch.name}</td>
+                    <td style={{padding:'8px 12px',color:C.gold,textAlign:'right',fontWeight:600}}>{ch.mean.toFixed(1)}</td>
+                    <td style={{padding:'8px 12px',color:C.muted,textAlign:'right'}}>{ch.p5.toFixed(1)}</td>
+                    <td style={{padding:'8px 12px',color:C.muted,textAlign:'right'}}>{ch.p50.toFixed(1)}</td>
+                    <td style={{padding:'8px 12px',color:C.muted,textAlign:'right'}}>{ch.p95.toFixed(1)}</td>
+                    <td style={{padding:'8px 12px',color:C.muted,textAlign:'right'}}>{(ch.share*100).toFixed(1)}%</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <div style={{marginTop:16,padding:12,background:'rgba(245,158,11,0.06)',border:`1px solid rgba(245,158,11,0.15)`,borderRadius:4}}>
+              <div style={{fontFamily:C.mono,fontSize:11,color:C.muted}}>Total welfare cost: <span style={{color:C.gold}}>${MC_WELFARE.mean.toFixed(1)}B</span> (90% CI: ${MC_WELFARE.ci_lo.toFixed(1)}B – ${MC_WELFARE.ci_hi.toFixed(1)}B) · Source: sapm_monte_carlo.py (seed=42)</div>
+            </div>
+          </div>
+        )}
+
           </div>
         )}
 

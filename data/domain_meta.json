@@ -1,0 +1,131 @@
+{
+  "key": "sapm-gambling",
+  "meta_fill": {
+    "pi": "$44.2B",
+    "psa": "-$234.3B",
+    "mu": "0.159",
+    "kappa": "0.91"
+  },
+  "psf": {
+    "pi_c": 9.5,
+    "pi_p": 44.2,
+    "w_c": 278.5,
+    "kappa": 0.91
+  },
+  "monte_carlo": {
+    "mean": 6.35,
+    "ci_lo": 4.4,
+    "ci_hi": 9.2,
+    "pct_hw": 99.3,
+    "n_draws": 10000,
+    "channels": [
+      {
+        "name": "Problem gambling health costs",
+        "dist": "triangular",
+        "lo": 85,
+        "hi": 160,
+        "mode": 118
+      },
+      {
+        "name": "Bankruptcy & financial destruction",
+        "dist": "triangular",
+        "lo": 40,
+        "hi": 90,
+        "mode": 62
+      },
+      {
+        "name": "Family & domestic harm",
+        "dist": "log-normal",
+        "lo": 25,
+        "hi": 65,
+        "mode": 42
+      },
+      {
+        "name": "Crime & fraud",
+        "dist": "triangular",
+        "lo": 18,
+        "hi": 48,
+        "mode": 30
+      },
+      {
+        "name": "Youth initiation & lifetime harm",
+        "dist": "triangular",
+        "lo": 12,
+        "hi": 38,
+        "mode": 22
+      },
+      {
+        "name": "Governance capture",
+        "dist": "uniform",
+        "lo": 5,
+        "hi": 18,
+        "mode": 10
+      }
+    ]
+  },
+  "thresholds": [
+    {
+      "domain": "Online gambling penetration >30% of adults",
+      "year": 2025,
+      "confidence": "High",
+      "status": "42 U.S. states with legal sports betting; online penetration ~35%",
+      "crossed": true
+    },
+    {
+      "domain": "Problem gambling prevalence >3% (U.S.)",
+      "year": 2024,
+      "confidence": "High",
+      "status": "NCPG estimates 2-3% clinical, 4-6% subclinical; rising with mobile betting",
+      "crossed": true
+    },
+    {
+      "domain": "Federal online gambling regulation",
+      "year": 2028,
+      "confidence": "Low",
+      "status": "Wire Act interpretation in flux; no federal framework",
+      "crossed": false
+    },
+    {
+      "domain": "Sports betting advertising saturation threshold",
+      "year": 2025,
+      "confidence": "High",
+      "status": "NFL broadcast gambling ad saturation already drawing FTC attention",
+      "crossed": true
+    }
+  ],
+  "axioms": {
+    "type": "institutional",
+    "items": [
+      {
+        "id": "I1",
+        "name": "Addiction-by-design extraction",
+        "description": "Variable ratio reinforcement schedules, near-miss engineering, and loss-chasing UX design exploit neurobiological vulnerabilities to generate revenue concentrated among the ~15% of users with gambling disorder."
+      },
+      {
+        "id": "I2",
+        "name": "Regulatory capture through tax revenue dependency",
+        "description": "States that legalize gambling become financially dependent on gambling tax revenue, creating structural incentives to avoid regulation that would reduce volume."
+      },
+      {
+        "id": "I3",
+        "name": "Harm externalization",
+        "description": "Gambling costs (bankruptcy, family dissolution, mental health, crime) fall on healthcare, social services, and courts while profits accrue to operators \u2014 a textbook externality with no Pigouvian correction in any U.S. jurisdiction."
+      }
+    ]
+  },
+  "methods": {
+    "welfare_function": "W measured as problem gambling health costs (VSL-weighted suicide risk, mental health treatment), financial destruction (bankruptcy rates above baseline), family harm (divorce, child welfare costs), and criminal justice costs.",
+    "cooperative_baseline": "Gambling limited to low-stakes recreational venues with no mobile access, no algorithmic personalization, and mandatory harm-minimization tools, generating $9.5B in legitimate entertainment value.",
+    "key_sources": [
+      "National Council on Problem Gambling, Annual Report (2024)",
+      "American Gaming Association, State of the States (2024)",
+      "Calado & Griffiths, Problem gambling worldwide (2016) Journal of Behavioral Addictions",
+      "SAMHSA, National Survey on Drug Use and Health (2023)"
+    ],
+    "falsification": [
+      "F1: Demonstrate that expanded gambling access in a U.S. state does not increase problem gambling prevalence in a well-powered difference-in-differences study.",
+      "F2: Show that gambling revenue multiplier effects on state economies exceed the fiscal cost of gambling-related social services, healthcare, and criminal justice.",
+      "F3: Demonstrate that responsible gambling tools (deposit limits, self-exclusion) reduce problem gambling harm at scale without reducing total gambling revenue."
+    ]
+  }
+}
