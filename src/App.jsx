@@ -60,10 +60,10 @@ const CROSS_DOMAIN = [
 ];
 
 const HIGHLIGHTS = [
-        "β_W = 6.3. Π = $44.2B/yr predatory extraction premium above cooperative baseline. W = $277B/yr. System-adjusted payoff deeply negative.",
-        "Π_C = $27.8B: what industry would earn as pure casual recreation without addictive mechanics or problem-gambler dependence.",
+        "βW = 6.3. Π = $44.2B/yr predatory extraction premium above cooperative baseline. W = $277B/yr. System-adjusted payoff deeply negative.",
+        "Πᶜ = $27.8B: what industry would earn as pure casual recreation without addictive mechanics or problem-gambler dependence.",
         "Norway 2007 slot ban: documented deep structural reduction in population-level gambling harm — clearest case of product prohibition achieving welfare improvement.",
-        "Problem gamblers (3–5% of participants) generate 40–60% of industry revenue. β_W not contingent on how one defines \"problem\" gambling.",
+        "Problem gamblers (3–5% of participants) generate 40–60% of industry revenue. βW not contingent on how one defines \"problem\" gambling.",
         "μ* = 0.16: industry would need to convert 16% of welfare cost to welfare benefit. Current conversion: ~2.4%. System destroys $5.27 per $1 in net tax revenue.",
         "κ = $233B Kaldor-Hicks gap: annual surplus destruction no feasible transfer scheme could offset. Not a distributional problem — a production problem.",
 ];
@@ -320,7 +320,7 @@ export default function PSTGamblingDashboard() {
                   <th style={{padding:'8px 12px',textAlign:'left',color:C.gold}}>CAPM ANALOGUE</th>
                 </tr></thead>
                 <tbody>
-                  {[['β_W (System Beta)','β (Market Beta)'],['PSF (Private-Systemic Frontier)','SML (Security Market Line)'],[<>μ* (Shadow Price)</>,<>r<sub>f</sub> (Risk-Free Rate)</>],['Πˢᵃ (System-Adjusted Payoff)','α (Jensen\'s Alpha)'],['W (System Welfare)','No equivalent — structurally invisible'],[<>𝒮<sub>W</sub> (Welfare Efficiency)</>,<>Sharpe Ratio</>]].map(([s,c],i) => (
+                  {[[<>β<sub>W</sub> (System Beta)</>,<>β (Market Beta)</>],['PSF (Private-Systemic Frontier)','SML (Security Market Line)'],[<>μ* (Shadow Price)</>,<>r<sub>f</sub> (Risk-Free Rate)</>],['Πˢᵃ (System-Adjusted Payoff)','α (Jensen\'s Alpha)'],['W (System Welfare)','No equivalent — structurally invisible'],[<>𝒮<sub>W</sub> (Welfare Efficiency)</>,<>Sharpe Ratio</>]].map(([s,c],i) => (
                     <tr key={i} style={{borderBottom:`1px solid rgba(255,255,255,0.04)`}}>
                       <td style={{padding:'8px 12px',color:C.text}}>{s}</td>
                       <td style={{padding:'8px 12px',color:C.muted,fontFamily:C.serif}}>{c}</td>
@@ -477,7 +477,7 @@ export default function PSTGamblingDashboard() {
       </div>
 
       
-      {/* 𝒮_W WELFARE EFFICIENCY RATIO */}
+      {/* 𝒮W WELFARE EFFICIENCY RATIO */}
       <div style={{padding:"24px",background:C.panel,border:"2px solid #D9770640",borderRadius:4,margin:"24px 0"}}>
         <div style={{fontFamily:C.mono,fontSize:12,color:"#D97706",letterSpacing:2,marginBottom:16}}>WELFARE EFFICIENCY RATIO</div>
         <div style={{display:"flex",alignItems:"baseline",gap:12,marginBottom:12}}>
